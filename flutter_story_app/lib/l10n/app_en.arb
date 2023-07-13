@@ -1,0 +1,19 @@
+{
+  "titleAppBarHome": "Story",
+  "titleAppBarSetting": "Settings",
+  "titleAppBarAddStory": "Add Story",
+  "titleAppBarStoryDetails":"Story Detail",
+  "loginWelcomeText": "Welcome",
+  "toRegisterText":"Click to create account",
+  "registerNameWarning":"Please Enter Name",
+  "registerEmailWarning": "Please Enter Email",
+  "registerPasswordWarning": "Please Enter Password",
+  "registerPasswordShortWarning": "Password Too Short",
+  "registerWelcomeText": "Create Account",
+  "toLoginText":"Click to login",
+  "buttonTextCamera": "Camera",
+  "buttonTextGallery": "Gallery",
+  "buttonTextUpload": "Upload",
+  "settingTextLanguage": "Language",
+  "hintTexStorytDescription":"Enter Story Description"
+}

@@ -1,0 +1,17 @@
+import 'package:flutter/material.dart';
+
+class DoneModuleProvider extends ChangeNotifier {
+  final List<String> _doneModuleList = [];
+
+  List<String> get doneModuleList => _doneModuleList;
+
+  void complete(String moduleName) {
+    _doneModuleList.add(moduleName);
+    notifyListeners();
+  }
+
+  void reverse(String moduleName) {
+    _doneModuleList.remove(moduleName);
+    notifyListeners();
+  }
+}

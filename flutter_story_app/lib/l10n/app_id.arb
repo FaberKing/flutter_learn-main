@@ -1,0 +1,19 @@
+{
+  "titleAppBarHome": "Cerita",
+  "titleAppBarSetting": "Pengaturan",
+  "titleAppBarAddStory": "Tambah Cerita",
+  "titleAppBarStoryDetails":"Detail Cerita",
+  "loginWelcomeText": "Selamat Datang",
+  "toRegisterText":"Klick untuk membuat akun",
+  "registerNameWarning":"Silahkan Masukan Name",
+  "registerEmailWarning": "Silahkan Masukan Email",
+  "registerPasswordWarning": "Silahkan Masukan Kata Sandi",
+  "registerPasswordShortWarning": "Kata Sandi Terlalu Pendek",
+  "registerWelcomeText": "Selamat Bergabung",
+  "toLoginText":"Klick untuk masuk",
+  "buttonTextCamera": "Kamera",
+  "buttonTextGallery": "Galeri",
+  "buttonTextUpload": "Mengunggah",
+  "settingTextLanguage": "Bahasa",
+  "hintTexStorytDescription":"Masukan deskripsi cerita"
+}
