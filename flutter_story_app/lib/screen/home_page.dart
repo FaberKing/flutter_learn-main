@@ -29,8 +29,8 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 237, 237, 237),
-        selectedItemColor: Colors.amber,
+        // backgroundColor: const Color.fromARGB(255, 237, 237, 237),
+        // selectedItemColor: Colors.amber,
         currentIndex: navigationShell.currentIndex,
         items: _bottomNavBarItems,
         onTap: (int index) => _onTap(context, index),

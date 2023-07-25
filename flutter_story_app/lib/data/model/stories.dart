@@ -1,75 +1,33 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-class Stories {
-  final bool error;
-  final String message;
-  final List<ListStory> listStory;
+part 'stories.freezed.dart';
+part 'stories.g.dart';
 
-  Stories({
-    required this.error,
-    required this.message,
-    required this.listStory,
-  });
+@freezed
+class Stories with _$Stories {
+  const factory Stories({
+    required bool error,
+    required String message,
+    required List<ListStory> listStory,
+  }) = _Stories;
 
-  factory Stories.fromRawJson(String str) => Stories.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory Stories.fromJson(Map<String, dynamic> json) => Stories(
-        error: json["error"],
-        message: json["message"],
-        listStory: List<ListStory>.from(
-            json["listStory"].map((x) => ListStory.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "error": error,
-        "message": message,
-        "listStory": List<dynamic>.from(listStory.map((x) => x.toJson())),
-      };
+  factory Stories.fromJson(Map<String, dynamic> json) =>
+      _$StoriesFromJson(json);
 }
 
-class ListStory {
-  final String id;
-  final String name;
-  final String description;
-  final String photoUrl;
-  final DateTime createdAt;
-  final double lat;
-  final double lon;
+@freezed
+class ListStory with _$ListStory {
+  const factory ListStory({
+    required String id,
+    required String name,
+    required String description,
+    required String photoUrl,
+    required DateTime createdAt,
+    @Default(0) double? lat,
+    @Default(0) double? lon,
+  }) = _ListStory;
 
-  ListStory({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.photoUrl,
-    required this.createdAt,
-    required this.lat,
-    required this.lon,
-  });
-
-  factory ListStory.fromRawJson(String str) =>
-      ListStory.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory ListStory.fromJson(Map<String, dynamic> json) => ListStory(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        photoUrl: json["photoUrl"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        lat: json["lat"]?.toDouble() ?? 0,
-        lon: json["lon"]?.toDouble() ?? 0,
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-        "photoUrl": photoUrl,
-        "createdAt": createdAt.toIso8601String(),
-        "lat": lat,
-        "lon": lon,
-      };
+  factory ListStory.fromJson(Map<String, dynamic> json) =>
+      _$ListStoryFromJson(json);
 }

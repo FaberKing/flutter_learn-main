@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:flutter_story_app/data/model/auth_result.dart';
-import 'package:flutter_story_app/data/model/user.dart';
+
+import 'login_result.dart';
 
 @immutable
 class AuthState {

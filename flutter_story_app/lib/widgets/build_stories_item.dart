@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_story_app/data/model/stories.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class BuildStoriesItem extends ConsumerWidget {
   final ListStory story;

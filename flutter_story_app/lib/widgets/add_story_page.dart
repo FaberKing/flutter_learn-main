@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_story_app/data/model/flavor_config.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../common/localizations_call.dart';
@@ -19,6 +21,16 @@ class AddStoryPage extends ConsumerStatefulWidget {
 
 class _AddStoryDialogState extends ConsumerState<AddStoryPage> {
   final _descriptionsController = TextEditingController();
+  final _coordinatesController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  late var latLngLocation;
+
+  @override
+  void initState() {
+    latLngLocation = null;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,65 +40,117 @@ class _AddStoryDialogState extends ConsumerState<AddStoryPage> {
         title: Text(AppLocalizations.of(context)!.titleAppBarAddStory),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Flexible(
-              flex: 3,
-              child: Align(
-                alignment: Alignment.center,
-                child: img['path'] == null
-                    ? const Icon(
-                        Icons.image,
-                        size: 100,
-                      )
-                    : _showImage(),
-              ),
-            ),
-            Flexible(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () => _onCameraView(),
-                    child: Text(AppLocalizations.of(context)!.buttonTextCamera),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => _onGalleryView(),
-                    child:
-                        Text(AppLocalizations.of(context)!.buttonTextGallery),
-                  ),
-                ],
-              ),
-            ),
-            Flexible(
-              flex: 2,
-              child: Container(
-                margin: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: _descriptionsController,
-                  decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!
-                          .hintTexStorytDescription),
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                ),
-              ),
-            ),
-            Flexible(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+        child: SingleChildScrollView(
+          child: Form(
+            key: formKey,
+            child: Column(
               children: [
-                ElevatedButton(
-                  onPressed: () => _onUpload().then(
-                    (value) => context.pop(),
+                Align(
+                  alignment: Alignment.center,
+                  child: img['path'] == null
+                      ? const Center(
+                          child: SizedBox(
+                            height: 290,
+                            width: 250,
+                            child: Icon(
+                              Icons.image,
+                              size: 100,
+                            ),
+                          ),
+                        )
+                      : _showImage(),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => _onCameraView(),
+                      child:
+                          Text(AppLocalizations.of(context)!.buttonTextCamera),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _onGalleryView(),
+                      child:
+                          Text(AppLocalizations.of(context)!.buttonTextGallery),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: _descriptionsController,
+                        decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)!
+                                .hintTexStorytDescription),
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Cannot be left empty';
+                          }
+                          return null;
+                        },
+                      ),
+                      FlavorConfig.instance.values.check
+                          ? TextFormField(
+                              readOnly: true,
+                              controller: _coordinatesController,
+                              decoration: InputDecoration(
+                                  suffixIcon: TextButton.icon(
+                                    onPressed: () async {
+                                      final LatLng? result = await context
+                                          .push('/story/add_story/map');
+                                      setState(() {
+                                        latLngLocation = result;
+                                        _coordinatesController.text =
+                                            'lat : ${result?.latitude}, lon : ${result?.longitude}';
+                                      });
+                                    },
+                                    icon: const Icon(Icons.location_on_rounded),
+                                    label: Text(AppLocalizations.of(context)!
+                                        .labelTextButtonStoryLocation),
+                                  ),
+                                  hintText: AppLocalizations.of(context)!
+                                      .hintTextStoryLocation),
+                              maxLines: null,
+                              keyboardType: TextInputType.multiline,
+                            )
+                          : const SizedBox.shrink(),
+                    ],
                   ),
-                  child: Text(AppLocalizations.of(context)!.buttonTextUpload),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate() &&
+                            img.isNotEmpty &&
+                            img['path'] != null) {
+                          _onUpload().then(
+                            (value) => context.pop(),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(AppLocalizations.of(context)!
+                                  .warningNoImageAddStory),
+                            ),
+                          );
+                        }
+                      },
+                      child:
+                          Text(AppLocalizations.of(context)!.buttonTextUpload),
+                    ),
+                  ],
                 ),
               ],
-            ))
-          ],
+            ),
+          ),
         ),
       ),
     );
@@ -95,6 +159,8 @@ class _AddStoryDialogState extends ConsumerState<AddStoryPage> {
   @override
   void dispose() {
     _descriptionsController.dispose();
+    _coordinatesController.dispose();
+
     super.dispose();
   }
 
@@ -171,14 +237,14 @@ class _AddStoryDialogState extends ConsumerState<AddStoryPage> {
     final bytes = await imageFile.readAsBytes();
 
     final newBytes =
-        await ref.read(asyncStoriesProvider.notifier).compressImage(bytes);
+        await ref.read(storiesProvider.notifier).compressImage(bytes);
 
-    final uploadProvider =
-        await ref.read(asyncStoriesProvider.notifier).addStory(
-              newBytes,
-              fileName,
-              _descriptionsController.text,
-            );
+    final uploadProvider = await ref.read(storiesProvider.notifier).addStory(
+          newBytes,
+          fileName,
+          _descriptionsController.text,
+          latLngLocation,
+        );
 
     if (uploadProvider.isNotEmpty) {
       ref.read(imageStateProvider.notifier).state = {

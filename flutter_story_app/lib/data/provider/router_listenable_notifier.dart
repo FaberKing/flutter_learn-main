@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_story_app/data/model/auth_state.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../model/auth_result.dart';
 import 'auth_provider.dart';
@@ -29,9 +29,9 @@ class RouterListenableNotifier extends AsyncNotifier<void>
         authProvider.result == AuthResult.failure ||
         authProvider.result == AuthResult.aborted) return null;
 
-    final isSplash = state.location == '/splash';
-    final isLogginIn = state.location == '/login';
-    final isRegisterIn = state.location == '/register';
+    final isSplash = state.uri.toString() == '/splash';
+    final isLogginIn = state.uri.toString() == '/login';
+    final isRegisterIn = state.uri.toString() == '/register';
 
     if (isSplash) {
       return isLoggin ? '/story' : '/login';

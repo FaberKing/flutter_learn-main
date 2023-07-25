@@ -15,5 +15,14 @@
   "buttonTextGallery": "Galeri",
   "buttonTextUpload": "Mengunggah",
   "settingTextLanguage": "Bahasa",
-  "hintTexStorytDescription":"Masukan deskripsi cerita"
+  "hintTexStorytDescription":"Masukan deskripsi cerita",
+  "hintTextStoryLocation":"Lokasi",
+  "labelTextButtonStoryLocation":"Tambah Lokasi",
+  "textCoodinatesDetails":"Koordinat lokasi",
+  "labelTextButtonLocateMap":"Melihat di peta",
+  "warningNoImageAddStory":"Tolong Masukan Gambar",
+  "warningNoItemsStoryList":"Tidak ada lagi cerita ditemukan!",
+  "warningErrorMessages":"Terjadi Kesalahan!",
+  "navigationHomeLabel":"Berandan",
+  "navigationSettingLabel":"Pengaturan"
 }

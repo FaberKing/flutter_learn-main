@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_story_app/flutter_mode_config.dart';
 import 'package:flutter_story_app/common/localizations_call.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -31,7 +32,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       backgroundColor: const Color.fromARGB(255, 237, 237, 237),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("Login"),
+        title: Text("Login : ${FlutterModeConfig.flutterMode}"),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -54,7 +55,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     children: [
                       const Icon(
                         Icons.login,
-                        color: Colors.amber,
                         size: 100,
                       ),
                       Text(

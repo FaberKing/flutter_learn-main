@@ -54,7 +54,6 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     children: [
                       const Icon(
                         Icons.account_box,
-                        color: Colors.amber,
                         size: 100,
                       ),
                       Text(

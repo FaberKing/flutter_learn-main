@@ -21,8 +21,8 @@ class AuthServices {
       'password': password
     });
 
-    final responseBody = ApiResponse.fromRawJson(
-      utf8.decode(response.bodyBytes),
+    final responseBody = ApiResponse.fromJson(
+      json.decode(utf8.decode(response.bodyBytes)),
     );
 
     switch (response.statusCode) {
@@ -43,11 +43,11 @@ class AuthServices {
     switch (response.statusCode) {
       case 200:
       case 201:
-        return User.fromRawJson(
-          utf8.decode(response.bodyBytes),
+        return User.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)),
         );
       default:
-        final responseBody = ApiResponse.fromRawJson(response.body);
+        final responseBody = ApiResponse.fromJson(json.decode(response.body));
 
         throw Exception(responseBody.message);
     }

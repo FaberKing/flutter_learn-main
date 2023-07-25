@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class StateLogger extends ProviderObserver {
@@ -9,7 +11,7 @@ class StateLogger extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    print('''
+    log('''
 {
   provider: ${provider.name ?? provider.runtimeType},
   oldValue: $previousValue,

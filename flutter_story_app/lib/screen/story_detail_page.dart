@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_story_app/common/localizations_call.dart';
+import 'package:flutter_story_app/data/model/flavor_config.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../data/model/story_detail.dart';
@@ -28,7 +30,7 @@ class _StoryDetailsPageState extends ConsumerState<StoryDetailsPage> {
       ),
       body: storyDetail.when(
         data: (data) {
-          if (data is StoriesDetail) {
+          if (data is StoryDetail) {
             final Story story = data.story;
             if (story.id.isEmpty) {
               return const Center(
@@ -76,10 +78,64 @@ class _StoryDetailsPageState extends ConsumerState<StoryDetailsPage> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(story.description),
+                    const SizedBox(
+                      height: 6,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, right: 8),
+                      child: Text(
+                        story.description,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 0.5,
+                      height: 5,
+                      color: Colors.black,
+                    ),
+                    if (((story.lat != '0' && story.lat != 0) &&
+                            (story.lon != '0' && story.lon != 0)) &&
+                        FlavorConfig.instance.values.check)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(AppLocalizations.of(context)!
+                                    .textCoodinatesDetails),
+                                TextButton(
+                                  onPressed: () {
+                                    final Map loc = {
+                                      'lat': story.lat!,
+                                      'lon': story.lon!
+                                    };
+                                    context.goNamed('details_map',
+                                        pathParameters: {'sid': story.id},
+                                        extra: loc);
+                                  },
+                                  child: Text(AppLocalizations.of(context)!
+                                      .labelTextButtonLocateMap),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text("Latitude: ${story.lat}"),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text("Longitude: ${story.lon}"),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    else
+                      const SizedBox.shrink(),
                   ],
                 ),
               );
@@ -93,7 +149,8 @@ class _StoryDetailsPageState extends ConsumerState<StoryDetailsPage> {
           }
         },
         error: (error, stackTrace) => Center(
-          child: Text(error.toString()),
+          child: Text(
+              "${AppLocalizations.of(context)!.warningErrorMessages} : ${error.toString()}"),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
       ),

@@ -8,7 +8,15 @@ class ErrorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(error.toString()),
+      child: Column(
+        children: [
+          Text(error.toString()),
+          ElevatedButton(
+            onPressed: () => context.go('/splash'),
+            child: const Text('Home'),
+          ),
+        ],
+      ),
     );
   }
 }

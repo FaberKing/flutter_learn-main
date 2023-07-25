@@ -15,5 +15,14 @@
   "buttonTextGallery": "Gallery",
   "buttonTextUpload": "Upload",
   "settingTextLanguage": "Language",
-  "hintTexStorytDescription":"Enter Story Description"
+  "hintTexStorytDescription":"Enter Story Description",
+  "hintTextStoryLocation":"Location",
+  "labelTextButtonStoryLocation":"Add Location",
+  "textCoodinatesDetails":"Location Coordinates",
+  "labelTextButtonLocateMap":"Look on map",
+  "warningNoImageAddStory":"Please Insert Image",
+  "warningNoItemsStoryList":"No More Stories Found!",
+  "warningErrorMessages":"Something Went Wrong!",
+  "navigationHomeLabel":"Home",
+  "navigationSettingLabel":"Settings"
 }

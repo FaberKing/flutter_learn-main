@@ -24,8 +24,10 @@ final storyDetailProvider =
       return story;
     }
   } on SocketException catch (_) {
-    return 'No Internet Connection';
+    // throw Exception('No Internet Connection');
+    return 'No Data Available';
   } catch (e) {
-    return 'error ===>> $e';
+    // throw Exception('error : $e');
+    return 'No Data Available';
   }
 });

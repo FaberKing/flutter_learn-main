@@ -1,26 +1,15 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-class ApiResponse {
-  final bool error;
-  final String message;
+part 'api_response.g.dart';
+part 'api_response.freezed.dart';
 
-  ApiResponse({
-    required this.error,
-    required this.message,
-  });
+@freezed
+class ApiResponse with _$ApiResponse {
+  const factory ApiResponse({
+    required bool error,
+    required String message,
+  }) = _ApiResponse;
 
-  factory ApiResponse.fromRawJson(String str) =>
-      ApiResponse.fromJson(json.decode(str));
-
-  String toRawJson() => json.encode(toJson());
-
-  factory ApiResponse.fromJson(Map<String, dynamic> json) => ApiResponse(
-        error: json["error"],
-        message: json["message"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "error": error,
-        "message": message,
-      };
+  factory ApiResponse.fromJson(json) => _$ApiResponseFromJson(json);
 }
