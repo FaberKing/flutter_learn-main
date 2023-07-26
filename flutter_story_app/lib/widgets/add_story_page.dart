@@ -24,7 +24,7 @@ class _AddStoryDialogState extends ConsumerState<AddStoryPage> {
   final _coordinatesController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  late var latLngLocation;
+  late LatLng? latLngLocation;
 
   @override
   void initState() {

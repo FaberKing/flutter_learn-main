@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_story_app/data/model/flavor_config.dart';
+import 'package:flutter_story_app/locale/locale_provider.dart';
 import 'package:flutter_story_app/screen/error_page.dart';
 
 import 'package:go_router/go_router.dart';
@@ -8,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_story_app/screen/map_location_page.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'common/localizations_call.dart';
-import 'data/provider/localization_provider.dart';
+import 'locale/localization_state_provider.dart';
 import 'data/provider/router_listenable_provider.dart';
 import 'screen/home_page.dart';
 import 'screen/login_page.dart';
@@ -24,7 +25,17 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locale = ref.watch(localizationStateProvider);
+    useEffect(() {
+      var widgetsBinting = WidgetsBinding.instance;
+      // ignore: unnecessary_null_comparison
+      if (widgetsBinting != null) {
+        widgetsBinting.addPostFrameCallback((_) async {
+          ref.read(localizationStateProvider.notifier).initLocale();
+        });
+      }
+      return;
+    });
+
     final listenRouter = ref.watch(routerListenableProvider.notifier);
     final rootNavigatorKey =
         useRef(GlobalKey<NavigatorState>(debugLabel: 'rootKey'));
@@ -140,6 +151,7 @@ class MyApp extends HookConsumerWidget {
       ),
       [listenRouter],
     );
+    Locale locale = ref.watch(localeProvider);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

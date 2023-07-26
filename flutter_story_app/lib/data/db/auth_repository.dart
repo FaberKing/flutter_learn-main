@@ -29,11 +29,20 @@ class AuthRepository {
     await sharedPreferences.remove(userToken);
   }
 
-  Future<void> setLocale(String value) async {
-    await sharedPreferences.setString(userLocale, value);
+  Future<bool> setLocale(Map<String, dynamic> value) async {
+    String string = jsonEncode(value);
+    return await sharedPreferences.setString(userLocale, string);
   }
 
-  String getLocale() {
-    return sharedPreferences.getString(userLocale) ?? '';
+  Future<Map<String, dynamic>?> getLocale() async {
+    if (!sharedPreferences.containsKey(userLocale)) {
+      return null;
+    }
+    String? string = sharedPreferences.getString(userLocale);
+    if (string == null) {
+      return null;
+    }
+    Map<String, dynamic> value = jsonDecode(string);
+    return value;
   }
 }

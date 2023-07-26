@@ -24,5 +24,6 @@
   "warningNoItemsStoryList":"No More Stories Found!",
   "warningErrorMessages":"Something Went Wrong!",
   "navigationHomeLabel":"Home",
-  "navigationSettingLabel":"Settings"
+  "navigationSettingLabel":"Settings",
+  "textSuccessfullyAdded":"Cerita Berhasil Dimasukan"
 }

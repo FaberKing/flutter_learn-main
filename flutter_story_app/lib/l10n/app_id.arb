@@ -24,5 +24,6 @@
   "warningNoItemsStoryList":"Tidak ada lagi cerita ditemukan!",
   "warningErrorMessages":"Terjadi Kesalahan!",
   "navigationHomeLabel":"Berandan",
-  "navigationSettingLabel":"Pengaturan"
+  "navigationSettingLabel":"Pengaturan",
+  "textSuccessfullyAdded":"Cerita Berhasil Dimasukan"
 }
