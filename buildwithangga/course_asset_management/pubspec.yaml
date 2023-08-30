@@ -1,0 +1,30 @@
+name: course_asset_management
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  cached_network_image: ^3.2.3
+  d_info: ^0.2.2
+  d_input: ^0.1.1
+  d_method: ^0.2.1
+  flutter:
+    sdk: flutter
+  freezed_annotation: ^2.4.1
+  http: ^1.1.0
+  image_picker: ^1.0.1
+  json_annotation: ^4.8.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
+  freezed: ^2.4.2
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
